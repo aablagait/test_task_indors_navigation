@@ -10,7 +10,7 @@ from .serializers import CatSerializer
 class CatViewSet(viewsets.ModelViewSet):
     """Представление для котиков."""
 
-    queryset = Cat.objects.all()
+    queryset = Cat.objects.all().order_by('id')
     serializer_class = CatSerializer
     pagination_class = PageNumberPagination
 

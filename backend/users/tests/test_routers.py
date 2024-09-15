@@ -96,8 +96,7 @@ def test_availabilyty_page_for_get_token(
 
 
 @pytest.mark.django_db
-def test_availabilyty_page_for_delete_token(
-        user_client, token_form, authenticated_client):
+def test_availabilyty_page_for_delete_token(authenticated_client):
     """Тест странцы удаления токена."""
     url = reverse('users:logout')
     response = authenticated_client.post(url)

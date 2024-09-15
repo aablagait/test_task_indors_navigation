@@ -6,7 +6,7 @@ from http import HTTPStatus
 
 
 @pytest.mark.django_db
-def test_get_subscribe(authenticated_client, other_user, user, subscribe_form):
+def test_get_subscribe(authenticated_client, other_user, subscribe_form):
     """Тест на добавление пользователя в подписки."""
     url = reverse('users:user-subscribe', args=[other_user.pk])
     count_subscribe = Subscriber.objects.count()

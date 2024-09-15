@@ -144,18 +144,11 @@ class SubscribePresentSerializer(serializers.ModelSerializer):
         read_only=True
     )
     is_subscribed = serializers.SerializerMethodField()
-    recipes_count = serializers.SerializerMethodField()
-    recipes = serializers.SerializerMethodField()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         request = self.context.get('request')
-        if request:
-            self.recipes_limit = request.query_params.get(
-                'recipes_limit', None
-            )
-            if self.recipes_limit:
-                self.recipes_limit = int(self.recipes_limit)
+
 
     class Meta:
         model = User
@@ -165,8 +158,6 @@ class SubscribePresentSerializer(serializers.ModelSerializer):
                   'first_name',
                   'last_name',
                   'is_subscribed',
-                  'recipes',
-                  'recipes_count',
                   'avatar',)
 
     def get_avatar(self, obj):
@@ -183,29 +174,3 @@ class SubscribePresentSerializer(serializers.ModelSerializer):
         return is_subscribed(request=request,
                              model=Subscriber,
                              obj=obj)
-
-    @staticmethod
-    def get_recipes_count(user):
-        """Получение количества рецептов."""
-        return user.recipes.count()
-
-    def get_recipes(self, obj):
-        """Возвращает рецепты пользователя.
-        Если в запросе указан ограничение рецептов,
-        то вернет ограниченное количество рецептов
-        на основе 'recipes_limit'."""
-        from recipes.serializers import RecipePresentSerializer
-        if self.recipes_limit:
-            # отложенный импорт! поаккуратнее
-            recipes = obj.recipes.all().order_by('id')[:self.recipes_limit]
-            return RecipePresentSerializer(
-                recipes,
-                many=True,
-                context=self.context
-            ).data
-        recipes = obj.recipes.all().order_by('id')
-        return RecipePresentSerializer(
-            recipes,
-            many=True,
-            context=self.context
-        ).data
