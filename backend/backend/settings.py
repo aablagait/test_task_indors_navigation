@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'cats',
     'users',
+    'messenger',
 ]
 
 MIDDLEWARE = [
