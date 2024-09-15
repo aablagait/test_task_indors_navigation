@@ -3,10 +3,13 @@
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-@wk(#_lnloypov=42n2ziv&upqb$tue-%a)29^ydo%mi=e2aa&'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-gsr-936')
 
 DEBUG = True
 
@@ -127,4 +130,3 @@ DJOSER = {
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
-

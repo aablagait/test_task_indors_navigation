@@ -1,0 +1,8 @@
+venv
+.git
+temporary/
+db.sqlite3
+.pytest_cache
+*.png
+*.jpeg
+.DS_Store
