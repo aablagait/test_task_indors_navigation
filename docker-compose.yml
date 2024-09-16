@@ -1,0 +1,16 @@
+version: '3.3'
+
+volumes:
+  static:
+  media:
+
+services:
+  backend:
+    build: ./backend/
+    container_name: indor-back
+    env_file: backend/.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - static:/backend_static
+      - media:/app/media
